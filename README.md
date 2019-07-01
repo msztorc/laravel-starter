@@ -92,8 +92,8 @@ Remember to run `vagrant reload` and after `vagrant provision` in box directory 
 
 To integrate Xdebug with PhpStorm perform following steps:
 
-1. Make sure you have ``php7.2-xdebug`` extension installed in within the vagrant box.
-2. Append following configuration to the ``/etc/php/7.2/php.ini`` file:
+1. Make sure you have ``php7.3-xdebug`` extension installed in within the vagrant box.
+2. Append following configuration to the ``/etc/php/7.3/php.ini`` file:
 ```
 [xdebug]
 zend_extension=/usr/lib/php/20170718/xdebug.so
@@ -102,7 +102,7 @@ xdebug.remote_port=9000
 xdebug.profiler_enable=1
 xdebug.remote_host=10.10.10.1
 ```
-3. Execute command: ``sudo service php7.2-fpm restart``.
+3. Execute command: ``sudo service php7.3-fpm restart``.
 4. Install ``Xdebug helper`` extension for Chrome (or some kind of equivalent for your browser).
 5. In PhpStorm:
  * Press <kbd>Ctrl+Shift+A</kbd> and search ``Web Server Debug Validation``. 
