@@ -14,8 +14,10 @@
   tasks:
 
   - name: Install required packages
-    apt: name={{ item }} update_cache=yes state=latest
-    with_items:
+    apt:
+      name: "{{ packages }}"
+    vars:
+      packages:
       - git
       - python-pip
       - python-dev
@@ -24,22 +26,36 @@
       - sqlite3
       - python-setuptools
       - curl
+      update_cache: yes
+      state: latest
 
   - name: Install dependencies for mysql
-    apt: name={{ item }} update_cache=yes state=latest
-    with_items:
+    apt:
+      name: "{{ packages }}"
+      update_cache: no
+      state: latest
+    vars:
+      packages:
       - libmysqlclient-dev
     when: ansible_distribution == "Ubuntu"
 
   - name: Install dependencies for mariadb
-    apt: name={{ item }} update_cache=yes state=latest
-    with_items:
+    apt:
+      name: "{{ packages }}"
+      update_cache: no
+      state: latest
+    vars:
+      packages:
       - libmariadbclient-dev
     when: ansible_distribution == "Debian"
 
   - name: Install mysql
-    apt: name={{ item }} update_cache=yes state=latest
-    with_items:
+    apt:
+      name: "{{ packages }}"
+      update_cache: no
+      state: latest
+    vars:
+      packages:
       - mysql-server
       - mysql-client
 
@@ -57,8 +73,9 @@
   # Debian-specific tasks.
   - name: Add dependencies for latest PHP (Debian).
     apt:
-      name: "{{ item }}"
-    with_items:
+      name: "{{ packages }}"
+    vars:
+      packages:
       - apt-transport-https
       - ca-certificates
     when: ansible_distribution == "Debian"
@@ -83,19 +100,24 @@
   # PHP package purges.
   - name: Purge PHP version packages.
     apt:
-      name: "{{ item }}"
+      name: "{{ packages }}"
       state: absent
       purge: yes
       force: yes
-    with_items:
+    vars:
+      packages:
       - php5.6-common
       - php7.0-common
       - php7.1-common
       - php7.2-common
 
   - name: install php
-    apt: name={{ item }} update_cache=yes state=latest
-    with_items:
+    apt:
+      name: "{{ packages }}"
+      update_cache: yes
+      state: latest
+    vars:
+      packages:
       - php7.3-cli
       - php7.3-curl
       - php7.3-fpm
@@ -105,6 +127,7 @@
       - php7.3-mbstring
       - php7.3-xml
       - php7.3-zip
+      - php7.3-mysql
 
   - name: ensure php7.3-fpm cgi.fix_pathinfo=0
     lineinfile: dest=/etc/php/7.3/fpm/php.ini regexp='^(.*)cgi.fix_pathinfo=' line=cgi.fix_pathinfo=0
