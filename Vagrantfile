@@ -80,8 +80,11 @@ Vagrant.configure("2") do |config|
   # SHELL
 
   config.vm.provision "shell", inline: <<-SHELL
+      sed -i 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/g' /etc/ssh/sshd_config
+      sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
       echo "ubuntu:ubuntu" | sudo chpasswd
       ssh-keyscan -H 10.10.10.10 >> ~/.ssh/known_hosts
+      service ssh restart
   SHELL
 
   # Run Ansible from the Vagrant VM
