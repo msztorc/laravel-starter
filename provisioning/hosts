@@ -1,0 +1,4 @@
+[all]
+10.10.10.10 ansible_ssh_user=vagrant
+[sandbox]
+X.X.X.X ansible_ssh_user=root
