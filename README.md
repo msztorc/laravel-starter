@@ -22,7 +22,7 @@ Run machine
 
 Quick ```my-project``` replace
 
-``$ sed -i 's/my-project/laravel-project/g' *``
+``$ find ./ -type f -exec sed -i 's/my-project/fancy-project/g' {} \;``
 
 #### Vagrant
 
