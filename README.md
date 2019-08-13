@@ -1,5 +1,5 @@
 # Laravel Starter (Vagrant)
-Laravel clean starter on vagrant with ansible provisioning.
+Laravel clean starter for vagrant with ansible provisioning.
 
 - ubuntu 18.04 (bionic64)
 - laravel:latest
