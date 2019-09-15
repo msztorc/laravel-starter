@@ -93,7 +93,7 @@ Vagrant.configure("2") do |config|
       ansible.version = "latest"
       ansible.verbose = true
       ansible.playbook = "provisioning/playbook.yml"
-      ansible.limit = "all"
+      ansible.limit = "local"
       #ansible.inventory_path = "provisioning/hosts"
   end
 end
