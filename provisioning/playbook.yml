@@ -2,15 +2,6 @@
 - hosts: all
   become: yes
 
-  vars:
-    web_root: /var/www/my-project
-    web_host: my-project.host
-    db_root_name: root
-    db_root_pass: $p4ssvv0rD # set your db root password
-    app_db_name: my-project
-    app_db_user: my-project
-    app_db_pass: $p4ssvv0rD # set your db app user password
-
   tasks:
 
   - name: Install required packages
@@ -33,6 +24,8 @@
       update_cache: yes
       state: latest
 
+  - name: Install PyMySQL
+    command: pip install PyMySQL
 
   - name: Install dependencies for mysql
     apt:
@@ -63,7 +56,6 @@
       packages:
       - mysql-server
       - mysql-client
-      - python3-mysqldb
 
   - name: Set the correct opcache filename (Ubuntu/Debian).
     set_fact:
