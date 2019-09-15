@@ -2,15 +2,6 @@
 - hosts: all
   become: yes
 
-  vars:
-    web_root: /var/www/my-project
-    web_host: my-project.host
-    db_root_name: root
-    db_root_pass: $p4ssvv0rD # set your db root password
-    app_db_name: my-project
-    app_db_user: my-project
-    app_db_pass: $p4ssvv0rD # set your db app user password
-
   tasks:
 
   - name: Install required packages
@@ -19,8 +10,12 @@
     vars:
       packages:
       - git
-      - python-pip
-      - python-dev
+      - python3-selinux
+      - python3-semanage
+      - selinux-utils
+      - python3-pip
+      - python3-dev
+      - libmysqlclient-dev
       - build-essential
       - nginx
       - sqlite3
@@ -59,9 +54,7 @@
       packages:
       - mysql-server
       - mysql-client
-
-  - name: Install MySQL-python
-    command: pip install MySQL-python
+      - python3-mysqldb
 
   - name: Set the correct opcache filename (Ubuntu/Debian).
     set_fact:
