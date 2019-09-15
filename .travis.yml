@@ -1,0 +1,32 @@
+---
+sudo: required
+dist: trusty
+
+language: python
+python: "3.5"
+
+# Doc: https://docs.travis-ci.com/user/customizing-the-build#Build-Matrix
+env:
+  - ANSIBLE_VERSION=latest
+
+branches:
+  only:
+    - master
+
+before_install:
+  - sudo apt-get update -qq
+
+install:
+  # Install Ansible.
+  - if [ "$ANSIBLE_VERSION" = "latest" ]; then pip install ansible; else pip install ansible==$ANSIBLE_VERSION; fi
+  - if [ "$ANSIBLE_VERSION" = "latest" ]; then pip install ansible-lint; fi
+
+script:
+  # Check the role/playbook's syntax.
+  - ansible-playbook -i "local," provisioning/hosts provisioning/playbook.yml --syntax-check
+
+  # Run the role/playbook with ansible-playbook.
+  - ansible-playbook -i "local," provisioning/hosts provisioning/playbook.yml -vvvv --skip-tags update,copy_host_ssh_id
+
+  # check is the user is created or not
+  - id -u tasdik | grep -q "no" && (echo "user not found" && exit 1) || (echo "user found" && exit 0)
