@@ -1,5 +1,6 @@
-# Laravel Starter (Vagrant)
-Laravel clean starter on vagrant with ansible provisioning.
+# Laravel Starter
+
+Laravel clean starter using Ansible provisioning with Vagrant support.
 
 - ubuntu 18.04 (bionic64)
 - laravel:latest
@@ -7,18 +8,43 @@ Laravel clean starter on vagrant with ansible provisioning.
 - mysql 5.7
 - nginx
 
-### Deploy
+### Vagrant deploy with provisioning
 
-Clone vagrant config with ansible playbook to my-project directory
-
+Clone this repo to `my-project` folder (of course you can choose any name you want)
 ``git clone https://github.com/msztorc/laravel-starter.git my-project``
 
 ``cd my-project``
 
-Run machine
+Adjust your config files like project name, passwords, etc... - see below for more details.
+
+After that just run your machine to start auto-provisioning
 ``vagrant up``
 
 ### Adjusting variables of your vm and project
+
+Configurations are stored in files:
+
+[provisioning/group_vars/all](provisioning/group_vars/all)
+
+```yaml
+web_root: /var/www/my-project
+web_host: my-project.host
+db_root_name: root
+db_root_pass: $p4ssvv0rD # set your db root password
+app_db_name: my-project
+app_db_user: my-project
+app_db_pass: $p4ssvv0rD # set your db app user password
+```
+
+[provisioning/hosts](provisioning/hosts)
+
+```ini
+[local]
+localhost	ansible_connection=local ansible_ssh_private_key_file=/vagrant/.vagrant/machines/default/virtualbox/private_key
+
+[sandbox]
+SANDBOX_IP_HERE
+```
 
 Quick ```my-project``` replace
 
@@ -26,18 +52,20 @@ Quick ```my-project``` replace
 
 #### Vagrant
 
-Vagrant configuration is stored in `Vagrantfile`
+Vagrant configurations are stored in [Vagrantfile](Vagrantfile)
 
 Box default config
 
 __IP & hostname__
-```
+
+```ruby
     config.vm.network "private_network", ip: "10.10.10.10"
     config.vm.hostname = "my-project"
 ```
 
 __Resources (default: memory - 2GB, vCPUs - 2)__
-```
+
+```ruby
    config.vm.provider "virtualbox" do |vb|
      vb.memory = 2048
      vb.cpus = 2
@@ -45,16 +73,19 @@ __Resources (default: memory - 2GB, vCPUs - 2)__
 ```
 
 __Set synced folder__ (local, destination)
-```
+
+```ruby
   # config.vm.synced_folder "../data", "/vagrant_data"
 ```
 
-If you want to set synced folder mapping local project to box webroot, you have to set:
-```
+If you want to set synced folder mapping local project to box webroot, you have to uncomment this line:
+
+```ruby
 config.vm.synced_folder "../GIT/my-project", "/var/www/my-project"
 ```
 
-Remember to run `vagrant reload` in box directory every time after Vagrantfile was updated
+**Note**
+Remember to run `vagrant reload` every time when Vagrantfile has been updated
 
 Other useful vagrant commands
 
@@ -70,23 +101,8 @@ Up vagrant box (run in box directory)
 
 ``vagrant up``
 
-#### Ansible
-
-Provisioning vars and tasks are stored in `playbook.yml`
-
-Default vars:
-
-```
-  vars:
-    web_root: /var/www/my-project
-    web_host: my-project.host
-    db_root_name: root
-    db_root_pass: $p4ssvv0rD # set your db root password
-    app_db_name: my-project
-    app_db_user: my-project
-    app_db_pass: $p4ssvv0rD # set your db app user password
-```
-Remember to run `vagrant reload` and after `vagrant provision` in box directory every time after any provisioning configs was updated
+**Note**
+Remember to run `vagrant reload` and `vagrant provision` every time when any provisioning configs were updated
 
 ### Xdebug
 
@@ -100,7 +116,7 @@ zend_extension=/usr/lib/php/20170718/xdebug.so
 xdebug.remote_enable=1
 xdebug.remote_port=9000
 xdebug.profiler_enable=1
-xdebug.remote_host=10.10.10.1
+xdebug.remote_host=10.10.10.10
 ```
 3. Execute command: ``sudo service php7.3-fpm restart``.
 4. Install ``Xdebug helper`` extension for Chrome (or some kind of equivalent for your browser).
