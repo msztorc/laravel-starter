@@ -96,6 +96,9 @@
   - name: Create the app database
     mysql_db:
       name: "{{app_db_name}}"
+      login_user: "{{db_root_name}}"
+      login_password: "{{db_root_pass}}"
+      config_file: "/root/.my.cnf"
       collation: utf8_general_ci
       encoding: utf8
       state: present
