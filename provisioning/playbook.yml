@@ -167,6 +167,9 @@
   - name: Create the app database
     mysql_db:
       db: "{{app_db_name}}"
+      login_user: "{{db_root_name}}"
+      login_password: "{{db_root_pass}}"
+      config_file: "/root/.my.cnf"
       state: present
 
   - name: Create the app user
@@ -175,6 +178,9 @@
       password: "{{ app_db_pass }}"
       priv: "{{app_db_name}}.*:ALL"
       host: localhost
+      login_user: "{{db_root_name}}"
+      login_password: "{{db_root_pass}}"
+      config_file: "/root/.my.cnf"
 
   - name: create /var/www/ directory
     file: dest=/var/www/ state=directory owner=www-data group=www-data mode=0755
