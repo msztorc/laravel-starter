@@ -147,7 +147,7 @@
 
   - name: Create .my.cnf file with root password credentials
     template:
-      src: ".my.cnf"
+      src: ".my.cnf.j2"
       dest: "/root/.my.cnf"
       owner: root
       group: root
