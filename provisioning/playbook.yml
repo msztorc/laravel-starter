@@ -139,15 +139,14 @@
   - name: Create DB root user
     mysql_user: name={{db_root_name}} password={{db_root_pass}} priv="*.*:ALL,GRANT" host='%' state=present
 
-  - name: Ensure mysql root login
-    mysql_user: name={{db_root_name}} login_user={{db_root_name}} login_password={{db_root_pass}} state=absent
-
-
   - name: copy .my.cnf file with root password credentials
-    template: src=.my.cnf dest=/root/.my.cnf owner=root mode=0600
+    template: src=.my.cnf dest=/root/.my.cnf owner=root group=root mode=0600
     tags:
       - mycnf
     become: yes
+
+  - name: Ensure mysql root login
+    mysql_user: name={{db_root_name}} login_user={{db_root_name}} login_password={{db_root_pass}} state=absent config_file="/root/.my.cnf"
 
   - name: Create the app database
     mysql_db:
