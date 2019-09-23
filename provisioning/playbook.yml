@@ -112,6 +112,7 @@
     with_items: "{{ mysql_root_hosts.stdout_lines|default([]) }}"
     when: >
       ('5.7.' in mysql_cli_version.stdout or '8.0.' in mysql_cli_version.stdout)
+  
   # Set root password for MySQL < 5.7.x.
   - name: Update MySQL root password for localhost root account (< 5.7.x).
     shell: >
