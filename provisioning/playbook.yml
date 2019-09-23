@@ -71,7 +71,6 @@
       priv: "*.*:ALL,GRANT"
       host: "localhost"
       state: present
-    notify: restart mysql  
 
 
   - name: Create .my.cnf file with root password credentials
@@ -84,6 +83,7 @@
     tags:
       - mycnf
     become: yes
+    notify: restart mysql
 
   - name: Ensure mysql root login
     mysql_user:
