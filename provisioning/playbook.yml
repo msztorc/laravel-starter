@@ -137,6 +137,8 @@
       config_file: "/root/.my.cnf"
       state: absent
 
+  - debug: msg="content of /root/.my.cnf is {{lookup('file', '/root/.my.cnf') }}"
+
   - name: Create the app database
     mysql_db:
       name: "{{app_db_name}}"
