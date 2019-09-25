@@ -1,6 +1,16 @@
 # Laravel Starter
 
-Laravel clean starter using Ansible provisioning with Vagrant support.
+[![Build Status](https://travis-ci.org/msztorc/laravel-starter.svg?branch=master)](https://travis-ci.org/msztorc/laravel-starter)
+[![License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://www.opensource.org/licenses/MIT)
+
+<img style="float: right; height:30px; margin-left:20px;" src="https://www.vagrantup.com/assets/images/mega-nav/logo-vagrant-a7ab5898.svg">
+<img width="35" style="float:right; margin-left:20px;" alt="Ansible logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Ansible_logo.svg/64px-Ansible_logo.svg.png">
+<img style="float: right; height:30px; margin-left:10px;" src="https://laravel.com/img/logotype.min.svg">
+<img style="float: right; height:30px;" src="https://laravel.com/img/logomark.min.svg">
+
+Quick and easy Laravel deployments using Ansible provisioning with Vagrant support for local environments.
+
+**Default environment setup**
 
 - ubuntu 18.04 (bionic64)
 - laravel:latest
@@ -8,17 +18,25 @@ Laravel clean starter using Ansible provisioning with Vagrant support.
 - mysql 5.7
 - nginx
 
-### Vagrant deploy with provisioning
+### Vagrant deployment with Ansible local provisioning
 
 Clone this repo to `my-project` folder (of course you can choose any name you want)
-``git clone https://github.com/msztorc/laravel-starter.git my-project``
 
-``cd my-project``
+```bash
+git clone https://github.com/msztorc/laravel-starter.git my-project
+```
+
+```bash
+cd my-project
+```
 
 Adjust your config files like project name, passwords, etc... - see below for more details.
 
 After that just run your machine to start auto-provisioning
-``vagrant up``
+
+```bash
+vagrant up
+```
 
 ### Adjusting variables of your vm and project
 
@@ -27,13 +45,12 @@ Configurations are stored in files:
 [provisioning/group_vars/all](provisioning/group_vars/all)
 
 ```yaml
-web_root: /var/www/my-project
-web_host: my-project.host
-db_root_name: root
-db_root_pass: $p4ssvv0rD # set your db root password
-app_db_name: my-project
-app_db_user: my-project
-app_db_pass: $p4ssvv0rD # set your db app user password
+web_root: /var/www/my-project # project path
+web_host: my-project.host # project domain
+db_root_pass: p4ssvv0rD # database root password
+app_db_name: my-project # application database name
+app_db_user: my-project # application database user
+app_db_pass: p4ssvv0rD # application database user password
 ```
 
 [provisioning/hosts](provisioning/hosts)
