@@ -3,10 +3,7 @@
 [![Build Status](https://travis-ci.org/msztorc/laravel-starter.svg?branch=master)](https://travis-ci.org/msztorc/laravel-starter)
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://www.opensource.org/licenses/MIT)
 
-<img style="float: right; height:30px; margin-left:20px;" src="https://www.vagrantup.com/assets/images/mega-nav/logo-vagrant-a7ab5898.svg">
-<img width="35" style="float:right; margin-left:20px;" alt="Ansible logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Ansible_logo.svg/64px-Ansible_logo.svg.png">
-<img style="float: right; height:30px; margin-left:10px;" src="https://laravel.com/img/logotype.min.svg">
-<img style="float: right; height:30px;" src="https://laravel.com/img/logomark.min.svg">
+[![Laravel-Starter](laravel-starter.png)](https://github.com/msztorc/laravel-starter)
 
 Quick and easy Laravel deployments using Ansible provisioning with Vagrant support for local environments.
 
