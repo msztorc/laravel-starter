@@ -93,6 +93,9 @@
     become: yes
     notify: restart mysql
 
+  
+  - debug: msg="content of {{local_home}}/.my.cnf is {{lookup('file', '{{local_home}}/.my.cnf') }}"
+
   - name: Disallow root login remotely
     command: 'mysql -NBe "{{ item }}"'
     with_items:
@@ -141,7 +144,6 @@
       config_file: "{{local_home}}/.my.cnf"
       state: absent
 
-  - debug: msg="content of {{local_home}}/.my.cnf is {{lookup('file', '{{local_home}}/.my.cnf') }}"
 
   - name: Create the app database
     mysql_db:
