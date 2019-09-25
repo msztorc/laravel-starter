@@ -72,12 +72,9 @@
 
   - name: Set root user password
     mysql_user:
-      name: "{{db_root_name}}"
-      password: "{{ db_root_pass}}"
+      name: root
+      password: "{{ db_root_pass }}"
       check_implicit_admin: true
-      priv: "*.*:ALL,GRANT"
-      host: "localhost"
-      state: present
 
 
   - name: Create .my.cnf file with root password credentials
