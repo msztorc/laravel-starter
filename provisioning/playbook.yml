@@ -70,11 +70,11 @@
     changed_when: false
     check_mode: false
 
-  - name: Set root user password
-    mysql_user:
-      name: root
-      password: "{{ db_root_pass }}"
-      check_implicit_admin: true
+  # - name: Set root user password
+  #   mysql_user:
+  #     name: root
+  #     password: "{{ db_root_pass }}"
+  #     check_implicit_admin: true
 
   - name: Disallow root login remotely
     command: 'mysql -NBe "{{ item }}"'
