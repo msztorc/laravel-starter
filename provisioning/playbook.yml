@@ -1,6 +1,8 @@
 ---
 - hosts: all
   become: yes
+  vars:
+    local_home: "{{ lookup('env','HOME') }}"
   vars_files:
     - vars/main.yml
 
@@ -82,7 +84,7 @@
   - name: Create .my.cnf file with root password credentials
     template:
       src: ".my.cnf.j2"
-      dest: "/root/.my.cnf"
+      dest: "{{local_home}}/.my.cnf"
       owner: root
       group: root
       mode: 0600
@@ -134,10 +136,10 @@
       name: "{{db_root_name}}"
       login_user: "{{db_root_name}}"
       login_password: "{{db_root_pass}}"
-      config_file: "/root/.my.cnf"
+      config_file: "{{local_home}}/.my.cnf"
       state: absent
 
-  - debug: msg="content of /root/.my.cnf is {{lookup('file', '/root/.my.cnf') }}"
+  - debug: msg="content of {{local_home}}/.my.cnf is {{lookup('file', '{{local_home}}/.my.cnf') }}"
 
   - name: Create the app database
     mysql_db:
