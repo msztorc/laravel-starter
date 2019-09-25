@@ -125,14 +125,6 @@
       - mycnf
     become: yes
 
-  # - name: Ensure mysql root login
-  #   mysql_user:
-  #     name: "{{db_root_name}}"
-  #     login_user: "{{db_root_name}}"
-  #     login_password: "{{db_root_pass}}"
-  #     config_file: "/root/.my.cnf"
-  #     state: absent
-
   - name: Create the app database
     mysql_db:
       name: "{{app_db_name}}"
