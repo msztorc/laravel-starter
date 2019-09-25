@@ -63,6 +63,12 @@
     service: name=mysql state=started
     become: true
 
+  - name: Get MySQL version.
+    command: 'mysql --version'
+    register: mysql_cli_version
+    changed_when: false
+    check_mode: false
+
   - name: Set root user password
     mysql_user:
       name: "{{db_root_name}}"
@@ -110,8 +116,7 @@
       'ALTER USER "root"@"{{ item }}"
       IDENTIFIED WITH mysql_native_password BY "{{ db_root_pass }}";'
     with_items: "{{ mysql_root_hosts.stdout_lines|default([]) }}"
-    when: >
-      ('5.7.' in mysql_cli_version.stdout or '8.0.' in mysql_cli_version.stdout)
+    when: '5.7.' in mysql_cli_version.stdout or '8.0.' in mysql_cli_version.stdout
   
   # Set root password for MySQL < 5.7.x.
   - name: Update MySQL root password for localhost root account (< 5.7.x).
@@ -119,8 +124,7 @@
       mysql -NBe
       'SET PASSWORD FOR "root"@"{{ item }}" = PASSWORD("{{ db_root_pass }}");'
     with_items: "{{ mysql_root_hosts.stdout_lines|default([]) }}"
-    when: >
-      ('5.7.' not in mysql_cli_version.stdout and '8.0.' not in mysql_cli_version.stdout)
+    when: '5.7.' not in mysql_cli_version.stdout and '8.0.' not in mysql_cli_version.stdout
 
 
   - name: Ensure mysql root login
