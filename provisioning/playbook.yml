@@ -16,13 +16,13 @@
       - python3-selinux
       - python3-semanage
       - selinux-utils
-      - python3-pip
       - python3-dev
       - libmysqlclient-dev
       - build-essential
       - nginx
       - sqlite3
       - python-setuptools
+      - python-pip
       - curl
       update_cache: yes
       state: latest
