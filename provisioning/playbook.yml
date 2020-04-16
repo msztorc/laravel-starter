@@ -17,18 +17,17 @@
       - python3-semanage
       - selinux-utils
       - python3-dev
-      - libmysqlclient-dev
       - build-essential
       - nginx
       - sqlite3
       - python-setuptools
-      - python-pip
+      - python3-pip
       - curl
       update_cache: yes
       state: latest
 
   - name: Install PyMySQL
-    command: pip install PyMySQL
+    command: pip3 install PyMySQL
 
   - name: Install dependencies for mysql
     apt:
@@ -59,7 +58,19 @@
       packages:
       - mysql-server
       - mysql-client
+    when: ansible_distribution == "Ubuntu"
 
+  - name: Install mariadb
+    apt:
+      name: "{{ packages }}"
+      update_cache: no
+      state: latest
+    vars:
+      packages:
+      - mariadb-server
+      - mariadb-client
+    when: ansible_distribution == "Debian"
+    
   - name: Start MySQL
     service: name=mysql state=started
     become: true
@@ -75,6 +86,7 @@
   #     name: root
   #     password: "{{ db_root_pass }}"
   #     check_implicit_admin: true
+  #   when: ('MariaDB' in mysql_cli_version.stdout)
 
   - name: Disallow root login remotely
     command: 'mysql -NBe "{{ item }}"'
@@ -114,6 +126,40 @@
       ('5.7.' not in mysql_cli_version.stdout and '8.0.' not in mysql_cli_version.stdout)
 
   
+  # This command will fail when the root password was set previously
+
+  # - name: Check if root password is set
+  #   shell: >
+  #     mysqladmin -u root status
+  #   changed_when: false
+  #   failed_when: false
+  #   register: root_pwd_check
+  #   tags: mariadb
+
+  # - name: Set MariaDB root password for the first time (root@localhost)
+  #   mysql_user:
+  #     name: root
+  #     password: "{{ db_root_pass }}"
+  #     host: localhost
+  #     state: present
+  #   when: (root_pwd_check.rc == 0 and 'MariaDB' in mysql_cli_version.stdout)
+  #   tags: mariadb
+
+  # - name: Set MariaDB root password for 127.0.0.1, ::1
+  #   mysql_user:
+  #     name: root
+  #     password: "{{ db_root_pass }}"
+  #     host: "{{ item }}"
+  #     login_user: root
+  #     login_password: "{{ db_root_pass }}"
+  #     state: present
+  #   with_items:
+  #     - ::1
+  #     - 127.0.0.1
+  #   when: (root_pwd_check.rc == 0 and 'MariaDB' in mysql_cli_version.stdout)
+  #   tags: mariadb
+
+
   - name: Create .my.cnf file with root password credentials
     template:
       src: ".my.cnf.j2"
