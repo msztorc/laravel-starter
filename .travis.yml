@@ -4,8 +4,10 @@ sudo: required
 
 matrix:
   include:
-    - dist: bionic
-    - dist: buster
+    - os: ubuntu
+      dist: bionic
+    - os: debian
+      dist: buster
 
 language: python
 python: "3.5"
@@ -19,7 +21,7 @@ branches:
     - master
 
 before_install:
-  - sudo apt-get update -qq
+  - apt-get update -qq
 
 install:
   # Install Ansible.
