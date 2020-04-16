@@ -6,9 +6,9 @@ matrix:
     - os: linux
       dist: bionic
     - os: linux
-      dist: bionic
-      group: travis_latest
-      env: DOCKER="debian:buster" VARIANT="debian"
+      dist: xenial
+      #group: travis_latest
+      #env: DOCKER="debian:buster" VARIANT="debian"
 
 language: python
 python: "3.5"
@@ -16,8 +16,6 @@ python: "3.5"
 # Doc: https://docs.travis-ci.com/user/customizing-the-build#Build-Matrix
 env:
   - ANSIBLE_VERSION=latest
-  - ANSIBLE_VERSION=2.9.6
-  - ANSIBLE_VERSION=2.9.0
 
 branches:
   only:
