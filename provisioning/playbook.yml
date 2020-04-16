@@ -14,7 +14,6 @@
       packages:
       - git
       - python3-selinux
-      - python3-semanage
       - selinux-utils
       - python3-dev
       - build-essential
@@ -243,6 +242,7 @@
       - php7.0-common
       - php7.1-common
       - php7.2-common
+      - php7.3-common
 
   - name: install php
     apt:
@@ -251,21 +251,21 @@
       state: latest
     vars:
       packages:
-      - php7.3-cli
-      - php7.3-curl
-      - php7.3-fpm
-      - php7.3-intl
-      - php7.3-json
-      - php7.3-sqlite3
-      - php7.3-mbstring
-      - php7.3-xml
-      - php7.3-zip
-      - php7.3-mysql
+      - php7.4-cli
+      - php7.4-curl
+      - php7.4-fpm
+      - php7.4-intl
+      - php7.4-json
+      - php7.4-sqlite3
+      - php7.4-mbstring
+      - php7.4-xml
+      - php7.4-zip
+      - php7.4-mysql
 
-  - name: ensure php7.3-fpm cgi.fix_pathinfo=0
+  - name: ensure php7.4-fpm cgi.fix_pathinfo=0
     lineinfile: dest=/etc/php/7.3/fpm/php.ini regexp='^(.*)cgi.fix_pathinfo=' line=cgi.fix_pathinfo=0
     notify:
-      - restart php7.3-fpm
+      - restart php7.4-fpm
       - restart nginx
 
   - name: create /var/www/ directory
@@ -330,7 +330,7 @@
   - name: Configure nginx
     template: src=nginx.conf dest=/etc/nginx/sites-available/default
     notify:
-      - restart php7.3-fpm
+      - restart php7.4-fpm
       - restart nginx
 
   - name: install composer packages
@@ -364,8 +364,8 @@
         - "Web address: http://{{ web_host }}"
 
   handlers:
-    - name: restart php7.3-fpm
-      service: name=php7.3-fpm state=restarted
+    - name: restart php7.4-fpm
+      service: name=php7.4-fpm state=restarted
 
     - name: restart nginx
       service: name=nginx state=restarted
