@@ -1,6 +1,6 @@
 ---
 web_root: /var/www/my-project
-web_host: my-project.host
+web_host: laravel.host
 db_root_name: root
 db_root_pass: p4ssvv0rD
 app_db_name: my-project
