@@ -1,6 +1,11 @@
 ---
 sudo: required
-dist: bionic
+# dist: bionic
+
+matrix:
+  include:
+    - dist: bionic
+    - dist: buster
 
 language: python
 python: "3.5"
