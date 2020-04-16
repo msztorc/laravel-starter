@@ -29,6 +29,13 @@
   - name: Install PyMySQL
     command: pip3 install PyMySQL
 
+
+  - name: Making sure that pymysql is present
+    become: true
+    pip:
+      name: pymysql
+      state: present
+
   - name: Install dependencies for mysql
     apt:
       name: "{{ packages }}"
