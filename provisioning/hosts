@@ -6,3 +6,6 @@ localhost	ansible_connection=local
 
 [sandbox]
 X.X.X.X ansible_ssh_user=root
+
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3
